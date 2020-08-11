@@ -1,0 +1,47 @@
+@font-face {
+    src: url(font/Iceberg.ttf);
+    font-family: nos;
+}
+
+body {
+    background-color: rgb(1, 29, 95);
+    text-align: center;
+}
+
+#game-canvas {
+    background-color: rgb(195, 228, 255);
+}
+
+h1 {
+    color: rgb(0, 81, 148);
+    font-family: nos;
+    font-size: 50px;
+    margin: 10px auto;
+    width: 500px;
+    background-color: #ffffff;
+    border: 5px ridge rgb(0, 140, 255);
+    border-radius: 15px;
+    padding-top: 15px;
+}
+
+#score-container {
+    color: rgb(0, 98, 179);
+    display: flex;
+    margin: 10px auto;
+    width: 400px;
+    background-color: #ffffff;
+    border: 5px ridge rgb(0, 140, 255);
+    border-radius: 15px;
+}
+
+h2 {
+    font-family: nos;
+    font-size: 30px;
+    margin: 10px;
+    padding: 4px;
+}
+
+#image-container {
+    display: flex;
+    justify-content: center;
+}
