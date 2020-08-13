@@ -10,7 +10,7 @@ let appleX = 480;
 let appleY = 30;
 let snakeHeadX = 30;
 let snakeHeadY = 30;
-let moveX = 7.5;
+let moveAmount = 15;
 
 apple.onload = function () {
     ctx.drawImage(apple, appleX, appleY);
@@ -25,21 +25,83 @@ function checkAppleCollision() {
     }
 }
 
-const framesPerSecond = 30;
+const framesPerSecond = 5;
+let negativeAxis = false;
+let direction = "RIGHT";
 
 snakeHead.onload = function () {
     setInterval(function () {
         ctx.clearRect(snakeHeadX, snakeHeadY, 30, 30);
-        snakeHeadX = updateAxis(snakeHeadX);
+
+        if (direction === "RIGHT" || direction === "LEFT") {
+            snakeHeadX = updateAxis(snakeHeadX);
+        } else {
+            snakeHeadY = updateAxis(snakeHeadY);
+        }
+
         ctx.drawImage(snakeHead, snakeHeadX, snakeHeadY);
         checkAppleCollision();
     }, 1000 / framesPerSecond);
 };
 
 function updateAxis(position) {
-    position += moveX;
-    if (position > canvas.width - 25 || position < -5) {
-        moveX = -moveX;
+    if (!negativeAxis) {
+        position += moveAmount;
+        return position;
+    } else {
+        position -= moveAmount;
+        return position;
     }
-    return position;
 }
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Right" || e.key === "ArrowRight") {
+        if (snakeHeadX % 30 === 0) {
+            direction = "RIGHT";
+            negativeAxis = false;
+        } else if (snakeHeadX % 30 === 15) {
+            snakeHeadX += 15;
+            direction = "RIGHT";
+            negativeAxis = false;
+        }
+    }
+});
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Left" || e.key === "ArrowLeft") {
+        if (snakeHeadX % 30 === 0) {
+            direction = "LEFT";
+            negativeAxis = true;
+        } else if (snakeHeadX % 30 === 15) {
+            snakeHeadX -= 15;
+            direction = "LEFT";
+            negativeAxis = true;
+        }
+    }
+});
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Up" || e.key === "ArrowUp") {
+        if (snakeHeadY % 30 === 0) {
+            direction = "UP";
+            negativeAxis = true;
+        } else if (snakeHeadY % 30 === 15) {
+            snakeHeadY -= 15;
+            direction = "UP";
+            negativeAxis = true;
+        }
+    }
+});
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Down" || e.key === "ArrowDown") {
+        if (snakeHeadY % 30 === 0) {
+            direction = "DOWN";
+            negativeAxis = false;
+        } else if (snakeHeadY % 30 === 15) {
+            snakeHeadY += 15;
+            direction = "DOWN";
+            negativeAxis = false;
+        }
+    }
+});
