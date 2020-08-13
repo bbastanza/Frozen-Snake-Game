@@ -25,7 +25,7 @@ function checkAppleCollision() {
     }
 }
 
-const framesPerSecond = 5;
+const framesPerSecond = 20;
 let negativeAxis = false;
 let direction = "RIGHT";
 
@@ -56,52 +56,44 @@ function updateAxis(position) {
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Right" || e.key === "ArrowRight") {
-        if (snakeHeadX % 30 === 0) {
-            direction = "RIGHT";
-            negativeAxis = false;
-        } else if (snakeHeadX % 30 === 15) {
+        if (snakeHeadX % 30 === 15) {
             snakeHeadX += 15;
-            direction = "RIGHT";
-            negativeAxis = false;
+            ctx.clearRect(snakeHeadX - 15, snakeHeadY, 30, 30);
         }
+        direction = "RIGHT";
+        negativeAxis = false;
     }
 });
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Left" || e.key === "ArrowLeft") {
-        if (snakeHeadX % 30 === 0) {
-            direction = "LEFT";
-            negativeAxis = true;
-        } else if (snakeHeadX % 30 === 15) {
+        if (snakeHeadX % 30 === 15) {
             snakeHeadX -= 15;
-            direction = "LEFT";
-            negativeAxis = true;
+            ctx.clearRect(snakeHeadX + 15, snakeHeadY, 30, 30);
         }
+        direction = "LEFT";
+        negativeAxis = true;
     }
 });
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Up" || e.key === "ArrowUp") {
-        if (snakeHeadY % 30 === 0) {
-            direction = "UP";
-            negativeAxis = true;
-        } else if (snakeHeadY % 30 === 15) {
+        if (snakeHeadY % 30 === 15) {
             snakeHeadY -= 15;
-            direction = "UP";
-            negativeAxis = true;
+            ctx.clearRect(snakeHeadX, snakeHeadY + 15, 30, 30);
         }
+        direction = "UP";
+        negativeAxis = true;
     }
 });
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Down" || e.key === "ArrowDown") {
-        if (snakeHeadY % 30 === 0) {
-            direction = "DOWN";
-            negativeAxis = false;
-        } else if (snakeHeadY % 30 === 15) {
+        if (snakeHeadY % 30 === 15) {
             snakeHeadY += 15;
-            direction = "DOWN";
-            negativeAxis = false;
+            ctx.clearRect(snakeHeadX, snakeHeadY - 15, 30, 30);
         }
+        direction = "DOWN";
+        negativeAxis = false;
     }
 });
