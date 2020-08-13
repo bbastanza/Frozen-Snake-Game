@@ -19,7 +19,7 @@ apple.onload = function () {
 function checkAppleCollision() {
     if (snakeHeadX === appleX && snakeHeadY === appleY) {
         appleX = Math.floor(23 * Math.random()) * 30 + 30;
-        // appleY = Math.floor(14 * Math.random()) * 30 + 30;
+        appleY = Math.floor(14 * Math.random()) * 30 + 30;
         //if apple position does not equal body or head position of the snake draw image///else rerun
         ctx.drawImage(apple, appleX, appleY);
     }
