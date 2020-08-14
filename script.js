@@ -2,6 +2,9 @@ const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("score");
 const highScoreDisplay = document.getElementById("high-score");
+
+const framesPerSecond = 60;
+const gridSize = 30;
 window.onload = () => {
     drawRandomApple();
     gamePlay();

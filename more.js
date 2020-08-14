@@ -7,7 +7,6 @@ function gamePlay() {
     apple.src = "images/apple.png";
 
     snakeHeadImage.onload = function () {
-        const framesPerSecond = 60;
         setInterval(function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -32,30 +31,32 @@ function gamePlay() {
 
             for (let i = 1; i < SNAKE.body.length; i++) {
                 const bodyElement = SNAKE.body[i];
-
                 ctx.drawImage(snakeBodyPiece, bodyElement.x, bodyElement.y);
-                if (SNAKE.body[0].x === bodyElement.x && SNAKE.body[0].y === bodyElement.y) {
-                    gameOver();
-                }
             }
 
             ctx.drawImage(snakeHeadImage, SNAKE.body[0].x, SNAKE.body[0].y);
             checkAppleCollision();
             checkBorderCollision();
-            // checkBodyCollision();
+            checkBodyCollision();
         }, 1000 / framesPerSecond);
     };
 }
+
 function addSnakeBodyPart() {
-    SNAKE.body.push({ x: APPLE.x, y: APPLE.y });
-    console.log(SNAKE.body);
+    let newBodyX = APPLE.x;
+    let newBodyY = APPLE.y;
+    // time for snake to get out of the way
+    let timeSnake = (1000 / framesPerSecond) * (gridSize / SNAKE.moveAmount);
+    setTimeout(() => {
+        SNAKE.body.push({ x: newBodyX, y: newBodyY });
+    }, timeSnake * SNAKE.body.length);
 }
-// function check snake body collision
-// let checkBodyCollision = () => {
-//     for (let i = 1; i < SNAKE.body.length; i++) {
-//         const bodyPart = SNAKE.body[i];
-//         if (SNAKE.body[0] == bodyPart) {
-//             gameOver();
-//         }
-//     }
-// };
+
+function checkBodyCollision() {
+    for (let i = 1; i < SNAKE.body.length; i++) {
+        const bodyElement = SNAKE.body[i];
+        if (SNAKE.body[0].x === bodyElement.x && SNAKE.body[0].y === bodyElement.y) {
+            gameOver();
+        }
+    }
+}
