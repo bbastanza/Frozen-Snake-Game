@@ -1,8 +1,9 @@
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
-
+const scoreDisplay = document.getElementById("score");
+const highScoreDisplay = document.getElementById("high-score");
 window.onload = () => {
-    drawApple();
+    drawRandomApple();
     gamePlay();
     // put highscore on screen from local storage
 };
@@ -26,64 +27,30 @@ const APPLE = {
 
 function checkAppleCollision() {
     if (SNAKE.body[0].x === APPLE.x && SNAKE.body[0].y === APPLE.y) {
-        drawApple();
         SCORING.score++;
-
         if (SCORING.score > SCORING.highScore) {
             SCORING.highScore = SCORING.score;
-            document.getElementById("high-score").textContent = `High Score: ${SCORING.highScore}`;
+            highScoreDisplay.textContent = `High Score: ${SCORING.highScore}`;
         }
-        document.getElementById("score").textContent = `Score: ${SCORING.score}`;
+        scoreDisplay.textContent = `Score: ${SCORING.score}`;
+        addSnakeBodyPart();
+        drawRandomApple();
     }
 }
 
-function drawApple() {
+function drawRandomApple() {
     const apple = new Image();
     apple.src = "images/apple.png";
     apple.onload = () => {
         APPLE.x = Math.floor(23 * Math.random()) * 30 + 30;
         APPLE.y = Math.floor(14 * Math.random()) * 30 + 30;
-        //if apple position does not equal body or head position of the snake draw image///else rerun
+        //if apple position does not equal body or head position of the snake draw image///else rerun ////while loop////
         ctx.drawImage(apple, APPLE.x, APPLE.y);
     };
 }
 
-function gamePlay() {
-    const snakeHeadImage = new Image();
-    snakeHeadImage.src = "images/olaf2.png";
-    const snakeBodyPiece = new Image();
-    snakeBodyPiece.src = "images/snowball.png";
-    snakeHeadImage.onload = function () {
-        const framesPerSecond = 60;
-        setInterval(function () {
-            ctx.clearRect(SNAKE.body[0].x - 3, SNAKE.body[0].y - 3, 36, 36);
-
-            if (SNAKE.body[0].x % 30 === 0 && SNAKE.body[0].y % 30 === 0) {
-                SNAKE.direction = SNAKE.newDirection;
-            }
-
-            if (SNAKE.direction === "RIGHT") {
-                SNAKE.body[0].x += SNAKE.moveAmount;
-            }
-            if (SNAKE.direction === "LEFT") {
-                SNAKE.body[0].x -= SNAKE.moveAmount;
-            }
-            if (SNAKE.direction === "DOWN") {
-                SNAKE.body[0].y += SNAKE.moveAmount;
-            }
-            if (SNAKE.direction === "UP") {
-                SNAKE.body[0].y -= SNAKE.moveAmount;
-            }
-
-            ctx.drawImage(snakeHeadImage, SNAKE.body[0].x, SNAKE.body[0].y);
-            checkAppleCollision();
-            checkBorderCollision();
-            // check snake collision
-        }, 1000 / framesPerSecond);
-    };
-}
-
 document.addEventListener("keydown", function (e) {
+    // prevent left if right, right if left, up if down, down if up
     if (e.key === "Right" || e.key === "ArrowRight") {
         SNAKE.newDirection = "RIGHT";
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
@@ -104,8 +71,21 @@ function checkBorderCollision() {
         SNAKE.body[0].y > canvas.height - 30 ||
         SNAKE.body[0].y < 0
     ) {
-        alert(`You Hit A Wall`);
+        gameOver();
     }
+}
+
+function gameOver() {
+    alert("GAME OVER");
+    SCORING.score = 0;
+    SNAKE.body = [{ x: "", y: "" }];
+    SNAKE.body[0].x = 30;
+    SNAKE.body[0].y = 30;
+    SNAKE.direction = "RIGHT";
+    SNAKE.newDirection = "RIGHT";
+    SNAKE.moveAmount = 3.75;
+    drawRandomApple();
+    scoreDisplay.textContent = `Score: ${SCORING.score}`;
 }
 
 // game over function include local storage of high score
