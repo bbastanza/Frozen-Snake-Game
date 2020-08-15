@@ -28,23 +28,21 @@ function gamePlay() {
             }
 
             ctx.drawImage(apple, APPLE.x, APPLE.y);
-            // something like if
-            // if (element[i].y < element[i-1].y)//
-            // element[i].y += SNAKE.moveAmount
-            for (let i = 1; i < SNAKE.body.length; i++) {
-                if (SNAKE.body[i].x < SNAKE.body[i - 1].x) {
-                    SNAKE.body[i].x += SNAKE.moveAmount;
-                } else if (SNAKE.body[i].x > SNAKE.body[i - 1].x) {
-                    SNAKE.body[i].x -= SNAKE.moveAmount;
-                    // } else if (SNAKE.body[i].y < SNAKE.body[i - 1].y) {
-                    //     SNAKE.body[i].y += SNAKE.moveAmount;
-                    // } else if (SNAKE.body[i].y > SNAKE.body[i - 1].y) {
-                    //     SNAKE.body[i].y -= SNAKE.moveAmount;
-                }
 
+            ///////////////////////////////////////////////////////
+            for (let i = 1; i < SNAKE.body.length; i++) {
+                if (SNAKE.body[i].x > SNAKE.body[i - 1].x) {
+                    SNAKE.body[i].x -= SNAKE.moveAmount;
+                } else if (SNAKE.body[i].x < SNAKE.body[i - 1].x) {
+                    SNAKE.body[i].x += SNAKE.moveAmount;
+                } else if (SNAKE.body[i].y > SNAKE.body[i - 1].y) {
+                    SNAKE.body[i].y -= SNAKE.moveAmount;
+                } else if (SNAKE.body[i].y < SNAKE.body[i - 1].y) {
+                    SNAKE.body[i].y += SNAKE.moveAmount;
+                }
                 ctx.drawImage(snakeBodyPiece, SNAKE.body[i].x, SNAKE.body[i].y);
             }
-
+            ///////////////////////////////////////////////////////////////
             ctx.drawImage(snakeHeadImage, SNAKE.body[0].x, SNAKE.body[0].y);
             checkAppleCollision();
             checkBorderCollision();
@@ -56,11 +54,11 @@ function gamePlay() {
 function addSnakeBodyPart() {
     let newBodyX = APPLE.x;
     let newBodyY = APPLE.y;
-    // time for snake to get out of the way
-    let timeSnake = (1000 / framesPerSecond) * (gridSize / SNAKE.moveAmount);
+    // time for each body piece to move a grid length
+    let snakeBodyTime = (1000 / framesPerSecond) * (gridSize / SNAKE.moveAmount);
     setTimeout(() => {
         SNAKE.body.push({ x: newBodyX, y: newBodyY });
-    }, timeSnake * SNAKE.body.length);
+    }, snakeBodyTime * SNAKE.body.length);
 }
 
 function checkBodyCollision() {
