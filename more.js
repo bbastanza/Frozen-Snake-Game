@@ -29,7 +29,7 @@ function gamePlay() {
             SNAKE.body[0].y -= SNAKE.moveAmount;
         }
 
-        for (let i = SNAKE.body.length; i < SNAKE.body.length + 1; i--) {
+        for (let i = 1; i < SNAKE.body.length; i++) {
             const child = SNAKE.body[i];
             const parent = SNAKE.body[i - 1];
 
