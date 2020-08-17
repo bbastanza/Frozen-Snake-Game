@@ -55,13 +55,21 @@ function drawRandomApple() {
 document.addEventListener("keydown", function (e) {
     // prevent left if right, right if left, up if down, down if up
     if (e.key === "Right" || e.key === "ArrowRight") {
-        SNAKE.newDirection = "RIGHT";
+        if (SNAKE.direction !== "LEFT") {
+            SNAKE.newDirection = "RIGHT";
+        }
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        SNAKE.newDirection = "LEFT";
+        if (SNAKE.direction !== "RIGHT") {
+            SNAKE.newDirection = "LEFT";
+        }
     } else if (e.key === "Up" || e.key === "ArrowUp") {
-        SNAKE.newDirection = "UP";
+        if (SNAKE.direction !== "DOWN") {
+            SNAKE.newDirection = "UP";
+        }
     } else if (e.key === "Down" || e.key === "ArrowDown") {
-        SNAKE.newDirection = "DOWN";
+        if (SNAKE.direction !== "UP") {
+            SNAKE.newDirection = "DOWN";
+        }
     } else if (e.keyCode === 32) {
         alert("Pause");
     }
