@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 const SCORE_DISPLAY = document.getElementById("score");
 const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
 
-const FRAMES_PER_SECOND = 60;
+let FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
 
 window.onload = () => {

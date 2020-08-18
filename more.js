@@ -1,15 +1,26 @@
+const DEBUG = true;
+if (DEBUG) {
+    SNAKE.body = [
+        { x: 150, y: 30 },
+        { x: 120, y: 30 },
+        { x: 90, y: 30 },
+        { x: 60, y: 30 },
+        { x: 30, y: 30 },
+    ];
+    FRAMES_PER_SECOND = 5;
+    SNAKE.moveAmount = 30;
+}
+
 function gamePlay() {
     const APPLE_IMAGE = new Image();
     APPLE_IMAGE.src = "images/apple.png";
     const HEAD_IMAGE = new Image();
     HEAD_IMAGE.src = "images/olaf2.png";
-    const BODY_IMAGE = new Image();
-    BODY_IMAGE.src = "images/snowball.png";
 
     setInterval(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        moveSnakeTail();
+        // moveSnakeTail();
         moveSnakeBody();
         moveSnakeHead();
 
@@ -53,22 +64,28 @@ function moveSnakeHead() {
 }
 
 function moveSnakeBody() {
-    for (let i = 1; i < SNAKE.body.length; i++) {
+    for (let i = SNAKE.body.length - 1; i > 0; i--) {
         const child = SNAKE.body[i];
         const parent = SNAKE.body[i - 1];
 
         if (child.y > parent.y) {
             child.y -= SNAKE.moveAmount;
-        } else if (child.y < parent.y) {
-            child.y += SNAKE.moveAmount;
-        } else if (child.x > parent.x) {
-            child.x -= SNAKE.moveAmount;
-        } else if (child.x < parent.x) {
-            child.x += SNAKE.moveAmount;
+            child.x = parent.x;
         }
-
+        if (child.y < parent.y) {
+            child.y += SNAKE.moveAmount;
+            child.x = parent.x;
+        }
+        if (child.x > parent.x) {
+            child.x -= SNAKE.moveAmount;
+            child.y = parent.y;
+        }
+        if (child.x < parent.x) {
+            child.x += SNAKE.moveAmount;
+            child.y = parent.y;
+        }
+        const BODY_IMAGE = new Image();
+        BODY_IMAGE.src = "images/snowball.png";
         ctx.drawImage(BODY_IMAGE, child.x, child.y);
     }
 }
-
-function moveSnakeTail() {}
