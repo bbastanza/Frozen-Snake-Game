@@ -103,8 +103,8 @@ function gameOver() {
     SNAKE.direction = "RIGHT";
     SNAKE.newDirection = "RIGHT";
     SNAKE.moveAmount = 3.75;
-    drawRandomApple();
     SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
+    drawRandomApple();
 }
 
 // game over function include local storage of high score
