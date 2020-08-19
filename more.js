@@ -57,7 +57,10 @@ function moveSnakeBody() {
     ) {
         for (let i = SNAKE.body.length - 1; i > 0; i--) {
             const parent = SNAKE.body[i - 1];
+
             SNAKE.body[i] = Object.assign({}, parent);
+
+            // SNAKE.body[i] = JSON.parse(JSON.stringify(parent));
         }
     }
 
@@ -76,7 +79,6 @@ function checkLosingCollision() {
             gameOver();
         }
     }
-
     if (
         SNAKE.body[0].x > canvas.width - 30 ||
         SNAKE.body[0].x < 0 ||
@@ -88,6 +90,7 @@ function checkLosingCollision() {
 }
 
 function gameOver() {
+    crashSound.play();
     updateLeaderBoard(SCORING.score);
 
     SCORING.score = 0;

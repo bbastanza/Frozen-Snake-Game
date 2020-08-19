@@ -5,14 +5,17 @@ const SCORE_DISPLAY = document.getElementById("score");
 const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
 let newHighScore = false;
 
-const FRAMES_PER_SECOND = 60;
+const FRAMES_PER_SECOND = 45;
 const GRID_SIZE = 30;
 
 let randomizeApple;
 
+let bellSound;
+let crashSound;
+
 const SCORING = {
     score: 0,
-    highScore: "",
+    highScore: JSON.parse(window.localStorage.getItem("high-score")) || 0,
 };
 
 const SNAKE = {
@@ -33,21 +36,24 @@ const APPLE = {
 };
 
 window.onload = () => {
+    alert("Welcome to Frozen Snake! Press Space to begin!");
     randomApple();
     gamePlay();
-    SCORING.highScore = JSON.parse(window.localStorage.getItem("high-score")) || 0;
+    bellSound = new Audio("sfx/bellssfx.mp3");
+    crashSound = new Audio("sfx/crash.mp3");
     HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
 };
 
 function checkAppleCollision() {
     if (SNAKE.body[0].x === APPLE.x && SNAKE.body[0].y === APPLE.y) {
-        updateScores();
+        bellSound.play();
+        updateScoreDisplay();
         addSnakeBodyPart();
         randomApple();
     }
 }
 
-function updateScores() {
+function updateScoreDisplay() {
     SCORING.score++;
     if (SCORING.score > SCORING.highScore) {
         SCORING.highScore = SCORING.score;
