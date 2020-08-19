@@ -3,6 +3,7 @@ function gamePlay() {
     APPLE_IMAGE.src = "images/apple.png";
     const HEAD_IMAGE = new Image();
     HEAD_IMAGE.src = "images/olaf2.png";
+
     setInterval(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -10,7 +11,10 @@ function gamePlay() {
 
         moveSnakeHead();
 
-        ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
+        if (!randomizeApple) {
+            ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
+        }
+
         ctx.drawImage(HEAD_IMAGE, SNAKE.body[0].x, SNAKE.body[0].y);
 
         checkAppleCollision();
@@ -84,7 +88,7 @@ function checkLosingCollision() {
 }
 
 function gameOver() {
-    newHighScore ? alert("New High Score!") : alert("Game Over!");
+    updateLeaderBoard(SCORING.score);
 
     SCORING.score = 0;
     SNAKE.body = [
@@ -101,5 +105,27 @@ function gameOver() {
     SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
     newHighScore = false;
 
-    drawRandomApple();
+    randomApple();
+}
+
+function updateLeaderBoard(score) {
+    let highScore = JSON.parse(window.localStorage.getItem("high-score")) || 0;
+    let secondPlace = JSON.parse(localStorage.getItem("second-place")) || 0;
+    let thirdPlace = JSON.parse(localStorage.getItem("third-place")) || 0;
+    if (score > highScore) {
+        thirdPlace = secondPlace;
+        secondPlace = highScore;
+        highScore = score;
+    } else if (score > secondPlace || score === highScore) {
+        thirdPlace = secondPlace;
+        secondPlace = score;
+    } else if (score > thirdPlace || score === secondPlace) {
+        thirdPlace = score;
+    }
+    localStorage.setItem("high-score", JSON.stringify(SCORING.highScore));
+    localStorage.setItem("second-place", JSON.stringify(secondPlace));
+    localStorage.setItem("third-place", JSON.stringify(thirdPlace));
+    newHighScore
+        ? alert(`New High Score!\nGold <--> ${highScore}\nSilver <--> ${secondPlace}\n Bronze <--> ${thirdPlace}`)
+        : alert(`Game Over!\nGold <--> ${highScore}\nSilver <--> ${secondPlace}\n Bronze <--> ${thirdPlace}`);
 }

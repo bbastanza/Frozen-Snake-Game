@@ -5,8 +5,10 @@ const SCORE_DISPLAY = document.getElementById("score");
 const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
 let newHighScore = false;
 
-let FRAMES_PER_SECOND = 60;
+const FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
+
+let randomizeApple;
 
 const SCORING = {
     score: 0,
@@ -31,8 +33,8 @@ const APPLE = {
 };
 
 window.onload = () => {
+    randomApple();
     gamePlay();
-    drawRandomApple();
     SCORING.highScore = JSON.parse(window.localStorage.getItem("high-score")) || 0;
     HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
 };
@@ -41,7 +43,7 @@ function checkAppleCollision() {
     if (SNAKE.body[0].x === APPLE.x && SNAKE.body[0].y === APPLE.y) {
         updateScores();
         addSnakeBodyPart();
-        drawRandomApple();
+        randomApple();
     }
 }
 
@@ -50,7 +52,6 @@ function updateScores() {
     if (SCORING.score > SCORING.highScore) {
         SCORING.highScore = SCORING.score;
         HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
-        window.localStorage.setItem("high-score", JSON.stringify(SCORING.highScore));
         newHighScore = true;
     }
     SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
@@ -65,15 +66,9 @@ function addSnakeBodyPart() {
     }, snakeBodyTime * SNAKE.body.length);
 }
 
-function drawRandomApple() {
-    const APPLE_IMAGE = new Image();
-    APPLE_IMAGE.src = "images/apple.png";
-    APPLE_IMAGE.onload = () => {
-        APPLE.x = Math.floor(23 * Math.random()) * 30 + 30;
-        APPLE.y = Math.floor(14 * Math.random()) * 30 + 30;
-        //if apple position does not equal body or head position of the snake draw image///else rerun ////while loop////
-        ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
-    };
+function randomApple() {
+    APPLE.x = Math.floor(23 * Math.random()) * 30 + 30;
+    APPLE.y = Math.floor(14 * Math.random()) * 30 + 30;
 }
 
 document.addEventListener("keydown", function (e) {
