@@ -1,27 +1,13 @@
-const DEBUG = true;
-if (DEBUG) {
-    SNAKE.body = [
-        { x: 150, y: 30 },
-        { x: 120, y: 30 },
-        { x: 90, y: 30 },
-        { x: 60, y: 30 },
-        { x: 30, y: 30 },
-    ];
-    FRAMES_PER_SECOND = 5;
-    SNAKE.moveAmount = 30;
-}
-
 function gamePlay() {
     const APPLE_IMAGE = new Image();
     APPLE_IMAGE.src = "images/apple.png";
     const HEAD_IMAGE = new Image();
     HEAD_IMAGE.src = "images/olaf2.png";
-
     setInterval(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // moveSnakeTail();
         moveSnakeBody();
+
         moveSnakeHead();
 
         ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
@@ -29,17 +15,7 @@ function gamePlay() {
 
         checkAppleCollision();
         checkLosingCollision();
-        //
     }, 1000 / FRAMES_PER_SECOND);
-}
-
-function addSnakeBodyPart() {
-    let newBodyX = APPLE.x;
-    let newBodyY = APPLE.y;
-    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / SNAKE.moveAmount);
-    setTimeout(() => {
-        SNAKE.body.push({ x: newBodyX, y: newBodyY });
-    }, snakeBodyTime * SNAKE.body.length);
 }
 
 function moveSnakeHead() {
@@ -64,28 +40,66 @@ function moveSnakeHead() {
 }
 
 function moveSnakeBody() {
-    for (let i = SNAKE.body.length - 1; i > 0; i--) {
-        const child = SNAKE.body[i];
-        const parent = SNAKE.body[i - 1];
+    if (SNAKE.body.length <= 1) return;
 
-        if (child.y > parent.y) {
-            child.y -= SNAKE.moveAmount;
-            child.x = parent.x;
+    const HEAD = SNAKE.body[0];
+    const HEAD_CHILD = SNAKE.body[1];
+
+    if (
+        HEAD.x - HEAD_CHILD.x === 30 ||
+        HEAD.x - HEAD_CHILD.x === -30 ||
+        HEAD.y - HEAD_CHILD.y === 30 ||
+        HEAD.y - HEAD_CHILD.y === -30
+    ) {
+        for (let i = SNAKE.body.length - 1; i > 0; i--) {
+            const parent = SNAKE.body[i - 1];
+            SNAKE.body[i] = Object.assign({}, parent);
         }
-        if (child.y < parent.y) {
-            child.y += SNAKE.moveAmount;
-            child.x = parent.x;
-        }
-        if (child.x > parent.x) {
-            child.x -= SNAKE.moveAmount;
-            child.y = parent.y;
-        }
-        if (child.x < parent.x) {
-            child.x += SNAKE.moveAmount;
-            child.y = parent.y;
-        }
+    }
+
+    for (let i = 1; i < SNAKE.body.length; i++) {
+        const bodyPart = SNAKE.body[i];
         const BODY_IMAGE = new Image();
         BODY_IMAGE.src = "images/snowball.png";
-        ctx.drawImage(BODY_IMAGE, child.x, child.y);
+        ctx.drawImage(BODY_IMAGE, bodyPart.x, bodyPart.y);
     }
+}
+
+function checkLosingCollision() {
+    for (let i = 1; i < SNAKE.body.length; i++) {
+        const BODY_PART = SNAKE.body[i];
+        if (SNAKE.body[0].x === BODY_PART.x && SNAKE.body[0].y === BODY_PART.y) {
+            gameOver();
+        }
+    }
+
+    if (
+        SNAKE.body[0].x > canvas.width - 30 ||
+        SNAKE.body[0].x < 0 ||
+        SNAKE.body[0].y > canvas.height - 30 ||
+        SNAKE.body[0].y < 0
+    ) {
+        gameOver();
+    }
+}
+
+function gameOver() {
+    newHighScore ? alert("New High Score!") : alert("Game Over!");
+
+    SCORING.score = 0;
+    SNAKE.body = [
+        { x: 90, y: 30 },
+        { x: 60, y: 30 },
+        { x: 30, y: 30 },
+        { x: 0, y: 30 },
+    ];
+
+    SNAKE.direction = "RIGHT";
+    SNAKE.newDirection = "RIGHT";
+    SNAKE.moveAmount = 3.75;
+
+    SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
+    newHighScore = false;
+
+    drawRandomApple();
 }

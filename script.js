@@ -3,23 +3,23 @@ const ctx = canvas.getContext("2d");
 
 const SCORE_DISPLAY = document.getElementById("score");
 const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
+let newHighScore = false;
 
 let FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
 
-window.onload = () => {
-    drawRandomApple();
-    gamePlay();
-    // put highscore on screen from local storage
-};
-
 const SCORING = {
     score: 0,
-    highScore: 0,
+    highScore: "",
 };
 
 const SNAKE = {
-    body: [{ x: 30, y: 30 }],
+    body: [
+        { x: 90, y: 30 },
+        { x: 60, y: 30 },
+        { x: 30, y: 30 },
+        { x: 0, y: 30 },
+    ],
     direction: "RIGHT",
     newDirection: "RIGHT",
     moveAmount: 3.75,
@@ -30,17 +30,39 @@ const APPLE = {
     y: "",
 };
 
+window.onload = () => {
+    gamePlay();
+    drawRandomApple();
+    SCORING.highScore = JSON.parse(window.localStorage.getItem("high-score")) || 0;
+    HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
+};
+
 function checkAppleCollision() {
     if (SNAKE.body[0].x === APPLE.x && SNAKE.body[0].y === APPLE.y) {
-        SCORING.score++;
-        if (SCORING.score > SCORING.highScore) {
-            SCORING.highScore = SCORING.score;
-            HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
-        }
-        SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
+        updateScores();
         addSnakeBodyPart();
         drawRandomApple();
     }
+}
+
+function updateScores() {
+    SCORING.score++;
+    if (SCORING.score > SCORING.highScore) {
+        SCORING.highScore = SCORING.score;
+        HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
+        window.localStorage.setItem("high-score", JSON.stringify(SCORING.highScore));
+        newHighScore = true;
+    }
+    SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
+}
+
+function addSnakeBodyPart() {
+    let newBodyX = APPLE.x;
+    let newBodyY = APPLE.y;
+    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / SNAKE.moveAmount);
+    setTimeout(() => {
+        SNAKE.body.push({ x: newBodyX, y: newBodyY });
+    }, snakeBodyTime * SNAKE.body.length);
 }
 
 function drawRandomApple() {
@@ -75,36 +97,3 @@ document.addEventListener("keydown", function (e) {
         alert("Pause");
     }
 });
-
-function checkLosingCollision() {
-    for (let i = 1; i < SNAKE.body.length; i++) {
-        const BODY_PART = SNAKE.body[i];
-        if (SNAKE.body[0].x === BODY_PART.x && SNAKE.body[0].y === BODY_PART.y) {
-            gameOver();
-        }
-    }
-
-    if (
-        SNAKE.body[0].x > canvas.width - 30 ||
-        SNAKE.body[0].x < 0 ||
-        SNAKE.body[0].y > canvas.height - 30 ||
-        SNAKE.body[0].y < 0
-    ) {
-        gameOver();
-    }
-}
-
-function gameOver() {
-    alert("GAME OVER");
-    SCORING.score = 0;
-    SNAKE.body = [{ x: "", y: "" }];
-    SNAKE.body[0].x = 30;
-    SNAKE.body[0].y = 30;
-    SNAKE.direction = "RIGHT";
-    SNAKE.newDirection = "RIGHT";
-    SNAKE.moveAmount = 3.75;
-    SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
-    drawRandomApple();
-}
-
-// game over function include local storage of high score
