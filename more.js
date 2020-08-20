@@ -11,7 +11,7 @@ function gamePlay() {
 
         moveSnakeHead();
 
-        ctx.drawImage(appleImage, APPLE.x, APPLE.y);
+        ctx.drawImage(appleImage, apple.x, apple.y);
 
         ctx.drawImage(headImage, snake.body[0].x, snake.body[0].y);
 

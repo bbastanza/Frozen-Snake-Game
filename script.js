@@ -37,7 +37,7 @@ const apple = {
 
 window.onload = () => {
     alert("Welcome to Frozen Snake! Press Space to begin!");
-    randomApple();
+    randomApplePosition();
     gamePlay();
     bellSound = new Audio("sfx/bellssfx.mp3");
     crashSound = new Audio("sfx/crash.mp3");
@@ -49,7 +49,7 @@ function checkAppleCollision() {
         bellSound.play();
         updateScoreDisplay();
         addSnakeBodyPart();
-        randomApple();
+        randomApplePosition();
     }
 }
 
@@ -72,7 +72,7 @@ function addSnakeBodyPart() {
     }, snakeBodyTime * snake.body.length);
 }
 
-function randomApple() {
+function randomApplePosition() {
     apple.x = Math.floor(23 * Math.random()) * 30 + 30;
     apple.y = Math.floor(14 * Math.random()) * 30 + 30;
 }
