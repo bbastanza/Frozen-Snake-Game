@@ -5,7 +5,7 @@ const SCORE_DISPLAY = document.getElementById("score");
 const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
 let newHighScore = false;
 
-const FRAMES_PER_SECOND = 45;
+const FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
 
 let randomizeApple;

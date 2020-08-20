@@ -11,9 +11,7 @@ function gamePlay() {
 
         moveSnakeHead();
 
-        if (!randomizeApple) {
-            ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
-        }
+        ctx.drawImage(APPLE_IMAGE, APPLE.x, APPLE.y);
 
         ctx.drawImage(HEAD_IMAGE, SNAKE.body[0].x, SNAKE.body[0].y);
 
@@ -56,19 +54,19 @@ function moveSnakeBody() {
         HEAD.y - HEAD_CHILD.y === -30
     ) {
         for (let i = SNAKE.body.length - 1; i > 0; i--) {
-            const parent = SNAKE.body[i - 1];
+            const PARENT = SNAKE.body[i - 1];
 
-            SNAKE.body[i] = Object.assign({}, parent);
+            SNAKE.body[i] = Object.assign({}, PARENT);
 
             // SNAKE.body[i] = JSON.parse(JSON.stringify(parent));
         }
     }
 
     for (let i = 1; i < SNAKE.body.length; i++) {
-        const bodyPart = SNAKE.body[i];
+        const BODY_PART = SNAKE.body[i];
         const BODY_IMAGE = new Image();
         BODY_IMAGE.src = "images/snowball.png";
-        ctx.drawImage(BODY_IMAGE, bodyPart.x, bodyPart.y);
+        ctx.drawImage(BODY_IMAGE, BODY_PART.x, BODY_PART.y);
     }
 }
 
@@ -129,6 +127,6 @@ function updateLeaderBoard(score) {
     localStorage.setItem("second-place", JSON.stringify(secondPlace));
     localStorage.setItem("third-place", JSON.stringify(thirdPlace));
     newHighScore
-        ? alert(`New High Score!\nGold <--> ${highScore}\nSilver <--> ${secondPlace}\n Bronze <--> ${thirdPlace}`)
-        : alert(`Game Over!\nGold <--> ${highScore}\nSilver <--> ${secondPlace}\n Bronze <--> ${thirdPlace}`);
+        ? alert(`New High Score!\n1st --> ${highScore}\n2nd --> ${secondPlace}\n 3rd --> ${thirdPlace}`)
+        : alert(`Game Over!\n1st --> ${highScore}\n2nd --> ${secondPlace}\n 3rd --> ${thirdPlace}`);
 }
