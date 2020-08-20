@@ -1,8 +1,8 @@
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
-const SCORE_DISPLAY = document.getElementById("score");
-const HIGH_SCORE_DISPLAY = document.getElementById("high-score");
+const scoreDisplay = document.getElementById("score");
+const highScoreDisplay = document.getElementById("high-score");
 let newHighScore = false;
 
 const FRAMES_PER_SECOND = 60;
@@ -13,12 +13,12 @@ let randomizeApple;
 let bellSound;
 let crashSound;
 
-const SCORING = {
+const scoring = {
     score: 0,
     highScore: JSON.parse(window.localStorage.getItem("high-score")) || 0,
 };
 
-const SNAKE = {
+const snake = {
     body: [
         { x: 90, y: 30 },
         { x: 60, y: 30 },
@@ -30,7 +30,7 @@ const SNAKE = {
     moveAmount: 3.75,
 };
 
-const APPLE = {
+const apple = {
     x: "",
     y: "",
 };
@@ -41,11 +41,11 @@ window.onload = () => {
     gamePlay();
     bellSound = new Audio("sfx/bellssfx.mp3");
     crashSound = new Audio("sfx/crash.mp3");
-    HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
+    highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
 };
 
 function checkAppleCollision() {
-    if (SNAKE.body[0].x === APPLE.x && SNAKE.body[0].y === APPLE.y) {
+    if (snake.body[0].x === apple.x && snake.body[0].y === apple.y) {
         bellSound.play();
         updateScoreDisplay();
         addSnakeBodyPart();
@@ -54,45 +54,45 @@ function checkAppleCollision() {
 }
 
 function updateScoreDisplay() {
-    SCORING.score++;
-    if (SCORING.score > SCORING.highScore) {
-        SCORING.highScore = SCORING.score;
-        HIGH_SCORE_DISPLAY.textContent = `High Score: ${SCORING.highScore}`;
+    scoring.score++;
+    if (scoring.score > scoring.highScore) {
+        scoring.highScore = scoring.score;
+        highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
         newHighScore = true;
     }
-    SCORE_DISPLAY.textContent = `Score: ${SCORING.score}`;
+    scoreDisplay.textContent = `Score: ${scoring.score}`;
 }
 
 function addSnakeBodyPart() {
-    let newBodyX = APPLE.x;
-    let newBodyY = APPLE.y;
-    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / SNAKE.moveAmount);
+    let newBodyX = apple.x;
+    let newBodyY = apple.y;
+    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
     setTimeout(() => {
-        SNAKE.body.push({ x: newBodyX, y: newBodyY });
-    }, snakeBodyTime * SNAKE.body.length);
+        snake.body.push({ x: newBodyX, y: newBodyY });
+    }, snakeBodyTime * snake.body.length);
 }
 
 function randomApple() {
-    APPLE.x = Math.floor(23 * Math.random()) * 30 + 30;
-    APPLE.y = Math.floor(14 * Math.random()) * 30 + 30;
+    apple.x = Math.floor(23 * Math.random()) * 30 + 30;
+    apple.y = Math.floor(14 * Math.random()) * 30 + 30;
 }
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Right" || e.key === "ArrowRight") {
-        if (SNAKE.direction !== "LEFT") {
-            SNAKE.newDirection = "RIGHT";
+        if (snake.direction !== "LEFT") {
+            snake.newDirection = "RIGHT";
         }
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        if (SNAKE.direction !== "RIGHT") {
-            SNAKE.newDirection = "LEFT";
+        if (snake.direction !== "RIGHT") {
+            snake.newDirection = "LEFT";
         }
     } else if (e.key === "Up" || e.key === "ArrowUp") {
-        if (SNAKE.direction !== "DOWN") {
-            SNAKE.newDirection = "UP";
+        if (snake.direction !== "DOWN") {
+            snake.newDirection = "UP";
         }
     } else if (e.key === "Down" || e.key === "ArrowDown") {
-        if (SNAKE.direction !== "UP") {
-            SNAKE.newDirection = "DOWN";
+        if (snake.direction !== "UP") {
+            snake.newDirection = "DOWN";
         }
     } else if (e.keyCode === 32) {
         alert("Pause");
