@@ -54,8 +54,8 @@ function moveSnakeBody() {
         head.y - headChild.y === -30
     ) {
         for (let i = snake.body.length - 1; i > 0; i--) {
-            const PARENT = snake.body[i - 1];
-            snake.body[i] = Object.assign({}, PARENT);
+            const parent = snake.body[i - 1];
+            snake.body[i] = Object.assign({}, parent);
         }
     }
 
