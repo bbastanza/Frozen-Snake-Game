@@ -72,29 +72,58 @@ function addSnakeBodyPart() {
     }, snakeBodyTime * snake.body.length);
 }
 
+const DEBUG = true;
+
 function randomApplePosition() {
-    apple.x = Math.floor(23 * Math.random()) * 30 + 30;
-    apple.y = Math.floor(14 * Math.random()) * 30 + 30;
+    if (DEBUG) {
+        apple.x = 300;
+        apple.y = 30;
+    } else {
+        apple.x = Math.floor(23 * Math.random()) * 30 + 30;
+        apple.y = Math.floor(14 * Math.random()) * 30 + 30;
+    }
 }
 
+// document.addEventListener("keydown", function (e) {
+//     if (e.key === "Right" || e.key === "ArrowRight") {
+//         if (snake.direction !== "LEFT") {
+//             snake.newDirection = "RIGHT";
+//         }
+//     } else if (e.key === "Left" || e.key === "ArrowLeft") {
+//         if (snake.direction !== "RIGHT") {
+//             snake.newDirection = "LEFT";
+//         }
+//     } else if (e.key === "Up" || e.key === "ArrowUp") {
+//         if (snake.direction !== "DOWN") {
+//             snake.newDirection = "UP";
+//         }
+//     } else if (e.key === "Down" || e.key === "ArrowDown") {
+//         if (snake.direction !== "UP") {
+//             snake.newDirection = "DOWN";
+//         }
+//     } else if (e.keyCode === 32) {
+//         alert("Pause");
+//     }
+// });
+
 document.addEventListener("keydown", function (e) {
-    if (e.key === "Right" || e.key === "ArrowRight") {
-        if (snake.direction !== "LEFT") {
-            snake.newDirection = "RIGHT";
-        }
-    } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        if (snake.direction !== "RIGHT") {
-            snake.newDirection = "LEFT";
-        }
-    } else if (e.key === "Up" || e.key === "ArrowUp") {
-        if (snake.direction !== "DOWN") {
-            snake.newDirection = "UP";
-        }
-    } else if (e.key === "Down" || e.key === "ArrowDown") {
-        if (snake.direction !== "UP") {
-            snake.newDirection = "DOWN";
-        }
-    } else if (e.keyCode === 32) {
+    switch (e.key) {
+        case "Right" || "ArrowRight":
+            snake.direction !== "LEFT" ? (snake.newDirection = "RIGHT") : null;
+            break;
+        case "Left" || "ArrowLeft":
+            snake.direction !== "RIGHT" ? (snake.newDirection = "LEFT") : null;
+            break;
+        case "Up" || "ArrowUp":
+            snake.direction !== "DOWN" ? (snake.newDirection = "UP") : null;
+            break;
+        case "Down" || "ArrowDown":
+            snake.direction !== "UP" ? (snake.newDirection = "DOWN") : null;
+            break;
+        default:
+            break;
+    }
+    if (e.keyCode === 32) {
         alert("Pause");
     }
 });
