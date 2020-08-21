@@ -8,8 +8,6 @@ let newHighScore = false;
 const FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
 
-let randomizeApple;
-
 let bellSound;
 let crashSound;
 
@@ -47,22 +45,13 @@ window.onload = () => {
 function checkAppleCollision() {
     if (snake.body[0].x === apple.x && snake.body[0].y === apple.y) {
         bellSound.play();
+
         addSnakeBodyPart();
 
-        updateScoreDisplay();
-
         randomApplePosition();
-    }
-}
 
-function updateScoreDisplay() {
-    scoring.score++;
-    if (scoring.score > scoring.highScore) {
-        scoring.highScore = scoring.score;
-        highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
-        newHighScore = true;
+        updateScoreDisplay();
     }
-    scoreDisplay.textContent = `Score: ${scoring.score}`;
 }
 
 function addSnakeBodyPart() {
@@ -74,31 +63,28 @@ function addSnakeBodyPart() {
     }, snakeBodyTime * snake.body.length);
 }
 
-let drawApple = false;
 function randomApplePosition() {
     apple.x = Math.floor(23 * Math.random()) * 30 + 30;
     apple.y = Math.floor(14 * Math.random()) * 30 + 30;
 }
 
-document.addEventListener("keydown", function (e) {
-    switch (true) {
-        case e.key === "Right" || e.key === "ArrowRight":
-            snake.direction !== "LEFT" ? (snake.newDirection = "RIGHT") : null;
-            break;
-        case e.key === "Left" || e.key === "ArrowLeft":
-            snake.direction !== "RIGHT" ? (snake.newDirection = "LEFT") : null;
-            break;
-        case e.key === "Up" || e.key === "ArrowUp":
-            snake.direction !== "DOWN" ? (snake.newDirection = "UP") : null;
-            break;
-        case e.key === "Down" || e.key === "ArrowDown":
-            snake.direction !== "UP" ? (snake.newDirection = "DOWN") : null;
-            break;
-        default:
-            break;
+function checkAppleOnBody() {
+    for (const bodyPart of snake.body) {
+        if (apple.x === bodyPart.x && apple.y === bodyPart.y) randomApplePosition();
+    }
+}
+
+function checkLosingCollision() {
+    for (let i = 1; i < snake.body.length; i++) {
+        const bodyPart = snake.body[i];
+        if (snake.body[0].x === bodyPart.x && snake.body[0].y === bodyPart.y) return gameOver();
     }
 
-    if (e.keyCode === 32) {
-        alert("Pause");
-    }
-});
+    if (
+        snake.body[0].x > canvas.width - 30 ||
+        snake.body[0].x < 0 ||
+        snake.body[0].y > canvas.height - 30 ||
+        snake.body[0].y < 0
+    )
+        gameOver();
+}
