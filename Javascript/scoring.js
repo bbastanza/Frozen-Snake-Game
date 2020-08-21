@@ -18,6 +18,10 @@ function updateLeaderBoard(score) {
     localStorage.setItem("second-place", JSON.stringify(secondPlace));
     localStorage.setItem("third-place", JSON.stringify(thirdPlace));
 
+    scoreAlert(highScore, secondPlace, thirdPlace);
+}
+
+function scoreAlert(highScore, secondPlace, thirdPlace) {
     newHighScore
         ? alert(`New High Score!\n1st --> ${highScore}\n2nd --> ${secondPlace}\n 3rd --> ${thirdPlace}`)
         : alert(`Game Over!\n1st --> ${highScore}\n2nd --> ${secondPlace}\n 3rd --> ${thirdPlace}`);
@@ -32,7 +36,6 @@ function updateScoreDisplay() {
         highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
         newHighScore = true;
     }
-
     scoreDisplay.textContent = `Score: ${scoring.score}`;
 }
 
@@ -48,7 +51,6 @@ function gameOver() {
         { x: 30, y: 30 },
         { x: 0, y: 30 },
     ];
-
     snake.direction = "RIGHT";
     snake.newDirection = "RIGHT";
     snake.moveAmount = 3.75;
