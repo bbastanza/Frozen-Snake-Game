@@ -4,22 +4,24 @@ function gamePlay() {
     const headImage = new Image();
     headImage.src = "images/olaf2.png";
 
-    setInterval(function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setInterval(() => {
+        if (gameGoing) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        moveSnakeBody();
+            moveSnakeBody();
 
-        moveSnakeHead();
+            moveSnakeHead();
 
-        ctx.drawImage(appleImage, apple.x, apple.y);
+            ctx.drawImage(appleImage, apple.x, apple.y);
 
-        ctx.drawImage(headImage, snake.body[0].x, snake.body[0].y);
+            ctx.drawImage(headImage, snake.body[0].x, snake.body[0].y);
 
-        checkAppleCollision();
+            checkAppleCollision();
 
-        checkAppleOnBody();
+            checkAppleOnBody();
 
-        checkLosingCollision();
+            checkLosingCollision();
+        }
     }, 1000 / FRAMES_PER_SECOND);
 }
 
@@ -87,5 +89,11 @@ document.addEventListener("keydown", function (e) {
         default:
             break;
     }
-    if (e.keyCode === 32) return alert("Pause");
+    if (e.keyCode === 32) {
+        if (gameGoing) {
+            modalHeader.textContent = "Pause";
+            modalFooter.textContent = "Press Spacebar to Resume";
+            showModal();
+        } else hideModal();
+    }
 });
