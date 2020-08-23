@@ -80,3 +80,8 @@ h4 {
 #content-container {
     text-align: center;
 }
+
+#leaderboard {
+    text-align: left;
+    margin-left: 60px;
+}

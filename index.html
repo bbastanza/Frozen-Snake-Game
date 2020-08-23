@@ -11,19 +11,23 @@
             <div class="modal-content">
                 <div id="content-container">
                     <h3 id="modal-header">Welcome to Frozen Snake</h3>
-                    <h4 id="modal-first-place"></h4>
-                    <h4 id="modal-second-place"></h4>
-                    <h4 id="modal-third-place"></h4>
+                    <div id="leaderboard">
+                        <h4 id="modal-first-place"></h4>
+                        <h4 id="modal-second-place"></h4>
+                        <h4 id="modal-third-place"></h4>
+                    </div>
                     <h5 id="modal-footer">Press Space to Begin!</h5>
                 </div>
             </div>
         </div>
+
         <h1>
             <img src="images/olafLEFT.png" alt="snake-image" />Frozen Snake<img
                 src="images/olafRIGHT.png"
                 alt="snake-image"
             />
         </h1>
+
         <div id="image-container">
             <img src="images/anna.png" alt="anna-image" />
             <canvas id="game-canvas" width="750px" height="480px"></canvas>
@@ -34,8 +38,9 @@
             <h2 id="score">Score: 0</h2>
             <h2 id="high-score">High Score: 0</h2>
         </div>
-        <script src="Javascript/script.js"></script>
-        <script src="Javascript/movement.js"></script>
+
+        <script src="Javascript/main.js"></script>
+        <script src="Javascript/conditions.js"></script>
         <script src="Javascript/scoring.js"></script>
         <script src="Javascript/modals.js"></script>
     </body>
