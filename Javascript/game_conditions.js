@@ -66,7 +66,7 @@ document.addEventListener("keydown", function (e) {
     if (e.keyCode === 32) {
         if (gameGoing) {
             modalHeader.textContent = "Pause";
-            modalFooter.textContent = "Press Spacebar to Resume";
+            modalFooter.textContent = "Press Space Bar to Resume";
             showModal();
         } else hideModal();
     }

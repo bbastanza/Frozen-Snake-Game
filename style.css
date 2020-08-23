@@ -12,16 +12,9 @@ body {
     background-color: rgb(195, 228, 255);
 }
 
-h1 {
-    color: rgb(0, 81, 148);
-    font-family: nos;
-    font-size: 50px;
-    margin: 10px auto;
-    width: 500px;
-    background-color: #ffffff;
-    border: 5px ridge rgb(0, 140, 255);
-    border-radius: 15px;
-    padding-top: 15px;
+#image-container {
+    display: flex;
+    justify-content: center;
 }
 
 #score-container {
@@ -32,6 +25,18 @@ h1 {
     background-color: #ffffff;
     border: 5px ridge rgb(0, 140, 255);
     border-radius: 15px;
+}
+
+h1 {
+    color: rgb(0, 81, 148);
+    font-family: nos;
+    font-size: 50px;
+    margin: 10px auto;
+    width: 500px;
+    background-color: #ffffff;
+    border: 5px ridge rgb(0, 140, 255);
+    border-radius: 15px;
+    padding-top: 15px;
 }
 
 h2,
@@ -46,11 +51,6 @@ h4 {
     font-family: monospace;
     font-weight: bold;
     font-size: 20px;
-}
-
-#image-container {
-    display: flex;
-    justify-content: center;
 }
 
 .modal {
@@ -81,7 +81,7 @@ h4 {
     text-align: center;
 }
 
-#leaderboard {
+#leader-board {
     text-align: left;
     margin-left: 60px;
 }
