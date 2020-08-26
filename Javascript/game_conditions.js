@@ -16,7 +16,7 @@ function addSnakeBodyPart() {
     let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
     setTimeout(() => {
         snake.body.push({ x: newBodyX, y: newBodyY });
-    }, snakeBodyTime * snake.body.length);
+    }, (snakeBodyTime - 30) * snake.body.length);
 }
 
 function randomApplePosition() {
