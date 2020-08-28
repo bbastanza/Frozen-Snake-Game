@@ -13,10 +13,10 @@ function checkAppleCollision() {
 function addSnakeBodyPart() {
     let newBodyX = apple.x;
     let newBodyY = apple.y;
-    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount) - 60;
+    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
     setTimeout(() => {
         snake.body.push({ x: newBodyX, y: newBodyY });
-    }, (snakeBodyTime - 30) * snake.body.length);
+    }, snakeBodyTime * (snake.body.length - 1));
 }
 
 function randomApplePosition() {
