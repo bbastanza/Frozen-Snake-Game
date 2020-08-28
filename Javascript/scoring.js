@@ -48,15 +48,7 @@ function gameOver() {
     updateLeaderBoard(scoring.score);
     scoring.score = 0;
 
-    snake.body = [
-        { x: 90, y: 30 },
-        { x: 60, y: 30 },
-        { x: 30, y: 30 },
-        { x: 0, y: 30 },
-    ];
-    snake.direction = "RIGHT";
-    snake.newDirection = "RIGHT";
-    snake.moveAmount = 3.75;
+    snake = new Snake();
 
     scoreDisplay.textContent = `Score: ${scoring.score}`;
     newHighScore = false;

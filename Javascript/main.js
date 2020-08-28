@@ -21,22 +21,11 @@ let bellSound;
 let crashSound;
 
 let gameGoing = true;
+let snake = new Snake();
 
 const scoring = {
     score: 0,
     highScore: JSON.parse(window.localStorage.getItem("high-score")) || 0,
-};
-
-const snake = {
-    body: [
-        { x: 90, y: 30 },
-        { x: 60, y: 30 },
-        { x: 30, y: 30 },
-        { x: 0, y: 30 },
-    ],
-    direction: "RIGHT",
-    newDirection: "RIGHT",
-    moveAmount: 3.75,
 };
 
 const apple = {
@@ -53,6 +42,18 @@ window.onload = () => {
     crashSound = new Audio("sfx/crash.mp3");
     highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
 };
+
+function Snake() {
+    this.body = [
+        { x: 90, y: 30 },
+        { x: 60, y: 30 },
+        { x: 30, y: 30 },
+        { x: 0, y: 30 },
+    ];
+    this.direction = "RIGHT";
+    this.newDirection = "RIGHT";
+    this.moveAmount = 3.75;
+}
 
 function gamePlay() {
     const appleImage = new Image();
