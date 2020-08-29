@@ -1,5 +1,5 @@
 function updateLeaderBoard(score) {
-    let highScore = JSON.parse(window.localStorage.getItem("high-score")) || 0;
+    let highScore = JSON.parse(localStorage.getItem("high-score")) || 0;
     let secondPlace = JSON.parse(localStorage.getItem("second-place")) || 0;
     let thirdPlace = JSON.parse(localStorage.getItem("third-place")) || 0;
 
