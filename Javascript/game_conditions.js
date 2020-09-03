@@ -11,9 +11,9 @@ function checkAppleCollision() {
 }
 
 function addSnakeBodyPart() {
-    let newBodyX = apple.x;
-    let newBodyY = apple.y;
-    let snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
+    const newBodyX = apple.x;
+    const newBodyY = apple.y;
+    const snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
     setTimeout(() => {
         snake.body.push({ x: newBodyX, y: newBodyY });
     }, snakeBodyTime * (snake.body.length - 2));
@@ -35,14 +35,17 @@ function checkLosingCollision() {
         const bodyPart = snake.body[i];
         if (snake.body[0].x === bodyPart.x && snake.body[0].y === bodyPart.y) return gameOver();
     }
+    let wallCollisionHappened = checkWallCollision();
+    if (wallCollisionHappened) gameOver();
+}
 
-    if (
+function checkWallCollision() {
+    return (
         snake.body[0].x > canvas.width - 30 ||
         snake.body[0].x < 0 ||
         snake.body[0].y > canvas.height - 30 ||
         snake.body[0].y < 0
-    )
-        gameOver();
+    );
 }
 
 document.addEventListener("keydown", function (e) {

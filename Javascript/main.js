@@ -17,8 +17,8 @@ let newHighScore = false;
 const FRAMES_PER_SECOND = 60;
 const GRID_SIZE = 30;
 
-let bellSound;
-let crashSound;
+const bellSound = new Audio("sfx/bellssfx.mp3");
+const crashSound = new Audio("sfx/crash.mp3");
 
 let gameGoing = true;
 let snake = new Snake();
@@ -34,13 +34,7 @@ const apple = {
 };
 
 window.onload = () => {
-    showModal();
-    gamePlay();
-    randomApplePosition();
-
-    bellSound = new Audio("sfx/bellssfx.mp3");
-    crashSound = new Audio("sfx/crash.mp3");
-    highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
+    startGame();
 };
 
 function Snake() {
@@ -53,6 +47,13 @@ function Snake() {
     this.direction = "RIGHT";
     this.newDirection = "RIGHT";
     this.moveAmount = 3.75;
+}
+
+function startGame() {
+    showModal();
+    gamePlay();
+    randomApplePosition();
+    bellSound = highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
 }
 
 function gamePlay() {

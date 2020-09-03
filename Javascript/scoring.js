@@ -26,9 +26,7 @@ function scoreAlert(highScore, secondPlace, thirdPlace) {
     modalSecondPlace.textContent = `2nd ${secondPlace}`;
     modalThirdPlace.textContent = `3rd  ${thirdPlace}`;
     modalFooter.textContent = "Press Space Bar to Play Again!";
-    if (newHighScore) {
-        modalHeader.textContent = "New High Score!";
-    } else modalHeader.textContent = "Game Over!";
+    newHighScore ? (modalHeader.textContent = "New High Score!") : (modalHeader.textContent = "Game Over!");
     showModal();
 }
 
