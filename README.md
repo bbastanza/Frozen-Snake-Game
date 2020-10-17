@@ -4,7 +4,7 @@
 
 ![js](MDimages/javascript.png) ![html](MDimages/html.png) ![css](MDimages/css.png)
 
-Play the game [HERE](https://bbastanza.github.io/snake/)!
+Play the game [HERE](https://bbastanza.github.io/Frozen-Snake-Game/)
 
 ![Screenshot](MDimages/screenshot.png)
 
