@@ -20,6 +20,8 @@ This project opened up a new world of imagination in myself and I am excited to 
 
 > I used a wire frame to sketch out the initial concept. See that wire frame outline [here](https://wireframe.cc/KAhT4E)
 
+> Also works with VIM keys (h, j, k, l)
+
 ## Author
 
 ### Brian Bastanza- Full Stack Web Developer

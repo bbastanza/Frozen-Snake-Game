@@ -51,22 +51,23 @@ function checkWallCollision() {
 document.addEventListener("keydown", function (e) {
     const key = e.key;
     switch (true) {
-        case key === "Right" || key === "ArrowRight":
+        case key === "Right" || key === "ArrowRight" || key === "l":
             if (snake.direction !== "LEFT") return (snake.newDirection = "RIGHT");
             break;
-        case key === "Left" || key === "ArrowLeft":
+        case key === "Left" || key === "ArrowLeft" || key === "h":
             if (snake.direction !== "RIGHT") return (snake.newDirection = "LEFT");
             break;
-        case key === "Up" || key === "ArrowUp":
+        case key === "Up" || key === "ArrowUp" || key === "k":
             if (snake.direction !== "DOWN") return (snake.newDirection = "UP");
             break;
-        case key === "Down" || key === "ArrowDown":
+        case key === "Down" || key === "ArrowDown" || key === "j":
             if (snake.direction !== "UP") return (snake.newDirection = "DOWN");
             break;
         default:
             break;
     }
-    if (e.keyCode === 32) {
+
+    if (key === " ") {
         if (gameGoing) {
             modalHeader.textContent = "Pause";
             modalFooter.textContent = "Press Space Bar to Resume";
