@@ -18,15 +18,15 @@ function updateLeaderBoard(score) {
     localStorage.setItem("second-place", JSON.stringify(secondPlace));
     localStorage.setItem("third-place", JSON.stringify(thirdPlace));
 
-    scoreAlert(highScore, secondPlace, thirdPlace);
+    scoreAlert(highScore, secondPlace, thirdPlace, score);
 }
 
-function scoreAlert(highScore, secondPlace, thirdPlace) {
+function scoreAlert(highScore, secondPlace, thirdPlace, score) {
     modalFirstPlace.textContent = `1st  ${highScore}`;
     modalSecondPlace.textContent = `2nd ${secondPlace}`;
     modalThirdPlace.textContent = `3rd  ${thirdPlace}`;
     modalFooter.textContent = "Press Space Bar to Play Again!";
-    newHighScore ? (modalHeader.textContent = "New High Score!") : (modalHeader.textContent = "Game Over!");
+    newHighScore ? (modalHeader.textContent = "New High Score!") : (modalHeader.textContent = `Game Over! You got ${score} snowflakes!`);
     showModal();
 }
 

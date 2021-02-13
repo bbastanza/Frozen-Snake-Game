@@ -21,7 +21,7 @@ const bellSound = new Audio("sfx/bellssfx.mp3");
 const crashSound = new Audio("sfx/crash.mp3");
 
 let gameGoing = true;
-let snake = new Snake();
+let snake;
 
 const scoring = {
     score: 0,
@@ -37,23 +37,26 @@ window.onload = () => {
     startGame();
 };
 
-function Snake() {
-    this.body = [
-        { x: 90, y: 30 },
-        { x: 60, y: 30 },
-        { x: 30, y: 30 },
-        { x: 0, y: 30 },
-    ];
-    this.direction = "RIGHT";
-    this.newDirection = "RIGHT";
-    this.moveAmount = 3.75;
+class Snake {
+    constructor() {
+        this.body = [
+            { x: 90, y: 30 },
+            { x: 60, y: 30 },
+            { x: 30, y: 30 },
+            { x: 0, y: 30 },
+        ];
+        this.direction = "RIGHT";
+        this.newDirection = "RIGHT";
+        this.moveAmount = 3.75;
+    }
 }
 
 function startGame() {
+    snake = new Snake()
     showModal();
     gamePlay();
     randomApplePosition();
-    bellSound = highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
+    highScoreDisplay.textContent = `High Score: ${scoring.highScore}`;
 }
 
 function gamePlay() {
@@ -84,7 +87,8 @@ function gamePlay() {
 }
 
 function moveSnakeHead() {
-    if (snake.body[0].x % 30 === 0 && snake.body[0].y % 30 === 0) snake.direction = snake.newDirection;
+    if (snake.body[0].x % 30 === 0 && snake.body[0].y % 30 === 0)
+        snake.direction = snake.newDirection;
 
     switch (snake.direction) {
         case "RIGHT":

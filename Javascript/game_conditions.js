@@ -13,7 +13,8 @@ function checkAppleCollision() {
 function addSnakeBodyPart() {
     const newBodyX = apple.x;
     const newBodyY = apple.y;
-    const snakeBodyTime = (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
+    const snakeBodyTime =
+        (1000 / FRAMES_PER_SECOND) * (GRID_SIZE / snake.moveAmount);
     setTimeout(() => {
         snake.body.push({ x: newBodyX, y: newBodyY });
     }, snakeBodyTime * (snake.body.length - 2));
@@ -26,14 +27,16 @@ function randomApplePosition() {
 
 function checkAppleOnBody() {
     for (const bodyPart of snake.body) {
-        if (apple.x === bodyPart.x && apple.y === bodyPart.y) randomApplePosition();
+        if (apple.x === bodyPart.x && apple.y === bodyPart.y)
+            randomApplePosition();
     }
 }
 
 function checkLosingCollision() {
     for (let i = 1; i < snake.body.length; i++) {
         const bodyPart = snake.body[i];
-        if (snake.body[0].x === bodyPart.x && snake.body[0].y === bodyPart.y) return gameOver();
+        if (snake.body[0].x === bodyPart.x && snake.body[0].y === bodyPart.y)
+            return gameOver();
     }
     let wallCollisionHappened = checkWallCollision();
     if (wallCollisionHappened) gameOver();
@@ -52,10 +55,12 @@ document.addEventListener("keydown", function (e) {
     const key = e.key;
     switch (true) {
         case key === "Right" || key === "ArrowRight" || key === "l":
-            if (snake.direction !== "LEFT") return (snake.newDirection = "RIGHT");
+            if (snake.direction !== "LEFT")
+                return (snake.newDirection = "RIGHT");
             break;
         case key === "Left" || key === "ArrowLeft" || key === "h":
-            if (snake.direction !== "RIGHT") return (snake.newDirection = "LEFT");
+            if (snake.direction !== "RIGHT")
+                return (snake.newDirection = "LEFT");
             break;
         case key === "Up" || key === "ArrowUp" || key === "k":
             if (snake.direction !== "DOWN") return (snake.newDirection = "UP");
