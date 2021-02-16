@@ -2,7 +2,6 @@ const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
 const modal = document.getElementById("modal-background");
-const closeBtn = document.getElementById("close-button");
 
 const modalHeader = document.querySelector(".modal-content h3");
 const modalFirstPlace = document.getElementById("modal-first-place");
